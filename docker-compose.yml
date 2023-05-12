@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  app:
+    image: "ghcr.io/remla23-team16/app:latest"
+    ports:
+      - "3000:3000"
+    environment:
+      - PUBLIC_BACKEND_URL=http://localhost:8080
+  model-service:
+    image: "ghcr.io/remla23-team16/model-service:latest"
+    ports:
+      - "8080:8080"
