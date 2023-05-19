@@ -8,7 +8,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-    app: model-service
+      app: model-service
   template:
     metadata:
       labels:
@@ -41,11 +41,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-    app: app
+      app: app
   template:
     metadata:
-    labels:
-      app: app
+      labels:
+        app: app
     spec:
       containers:
         - name: app
@@ -84,3 +84,4 @@ metadata:
   name: model-service-config
 data:
   model.host: "http://todo-host-model-somewhere-and-fetch-it-in-model-service"
+  

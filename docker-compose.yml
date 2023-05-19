@@ -5,11 +5,12 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - PUBLIC_BACKEND_URL=http://localhost:8080
+      - BACKEND_URL=http://model-service:8080
   model-service:
     image: "ghcr.io/remla23-team16/model-service:latest"
-    ports:
-      - "8080:8080"
+    environment:
+      - CLASSIFIER_PATH=/app/out/classifier/
+      - BOW_PATH=/app/out/bow/
     volumes:
       - trained_models:/app/out
   model-training:
@@ -24,6 +25,5 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - --config.file=/etc/prometheus/prometheus.yml
-      -
 volumes:
   trained_models:
