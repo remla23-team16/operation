@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: model-service-config
-data:
-  model.host: "http://todo-host-model-somewhere-and-fetch-it-in-model-service"
-  
