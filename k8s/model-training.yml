@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: model-training-depl
+  labels:
+    app: model-training
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: model-training
+  template:
+    metadata:
+      labels:
+        app: model-training
+    spec:
+      volumes:
+        - name: shared-volume
+          persistentVolumeClaim:
+            claimName: shared-volume-claim
+      containers:
+        - name: model-training
+          image: ghcr.io/remla23-team16/model-training:latest
+          volumeMounts:
+            - name: trained-models
+              mountPath: /app/data/out

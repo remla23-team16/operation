@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: model-service-depl
+  labels:
+    app: model-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: model-service
+  template:
+    metadata:
+      labels:
+        app: model-service
+    spec:
+      volumes:
+        - name: shared-volume
+          persistentVolumeClaim:
+            claimName: shared-volume-claim
+      containers:
+        - name: model-service
+          image: ghcr.io/remla23-team16/model-service:latest
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: trained-models
+              mountPath: /app/data/out
+          env:
+          - name: CLASSIFIER_PATH
+            value: /app/data/out/classifier/
+          - name: BOW_PATH
+            value: /app/data/out/bow/
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: model-service-srv
+spec:
+  selector:
+    app: model-service
+  ports:
+    - port: 8080
+      targetPort: 8080

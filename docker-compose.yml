@@ -9,21 +9,21 @@ services:
   model-service:
     image: "ghcr.io/remla23-team16/model-service:latest"
     environment:
-      - CLASSIFIER_PATH=/app/out/classifier/
-      - BOW_PATH=/app/out/bow/
+      - CLASSIFIER_PATH=/app/data/out/classifier/
+      - BOW_PATH=/app/data/out/bow/
     volumes:
-      - trained_models:/app/out
+      - trained_models:/app/data/out
   model-training:
     image: "ghcr.io/remla23-team16/model-training:latest"
     volumes:
-      - trained_models:/app/out
+      - trained_models:/app/data/out
   prometheus:
     image: "prom/prometheus"
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./configs/prometheus-config.yml:/etc/prometheus/prometheus-config.yml
     command:
-      - --config.file=/etc/prometheus/prometheus.yml
+      - --config.file=/etc/prometheus/prometheus-config.yml
 volumes:
   trained_models:
