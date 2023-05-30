@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: shared-volume
+  name: trained-models
 spec:
   capacity:
     storage: 128Mi
@@ -14,7 +14,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: shared-volume-claim
+  name: trained-models-claim
 spec:
   accessModes:
     - ReadWriteMany

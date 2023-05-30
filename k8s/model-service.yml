@@ -15,9 +15,9 @@ spec:
         app: model-service
     spec:
       volumes:
-        - name: shared-volume
+        - name: trained-models
           persistentVolumeClaim:
-            claimName: shared-volume-claim
+            claimName: trained-models-claim
       containers:
         - name: model-service
           image: ghcr.io/remla23-team16/model-service:latest
