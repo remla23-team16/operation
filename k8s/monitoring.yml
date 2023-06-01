@@ -1,30 +1,3 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: showmetrics
-  labels:
-    app: showmetrics
-spec:
-  containers:
-  - name: showmetrics
-    image: proksch/showmetrics:latest
-    ports:
-    - containerPort: 8080
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-service
-  labels:
-    app: showmetrics-serv
-spec:
-  type: NodePort
-  selector:
-    app: showmetrics
-  ports:
-    - port: 1234
-      targetPort: 8080
----
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -34,6 +7,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: showmetrics-serv
+      app: app-svc
+      model-service: model-service-svc
   endpoints:
-  - interval: 1s
+  - port: 3000
+    path: /metrics
+    interval: 5s
+  - port: 8080
+    path: /metrics
+    interval: 5s

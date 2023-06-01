@@ -36,7 +36,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: model-service-srv
+  name: model-service-svc
 spec:
   selector:
     app: model-service

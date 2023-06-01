@@ -5,6 +5,6 @@ metadata:
 spec:
   defaultBackend:
     service:
-      name: app-srv
+      name: app-svc
       port:
         number: 3000
