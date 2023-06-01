@@ -10,9 +10,9 @@ spec:
       app: app-svc
       model-service: model-service-svc
   endpoints:
-  - port: 3000
-    path: /metrics
+  - port: "3000"
+    path: "/metrics"
     interval: 5s
-  - port: 8080
-    path: /metrics
+  - port: "8080"
+    path: "/metrics"
     interval: 5s
