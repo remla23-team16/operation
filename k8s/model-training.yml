@@ -1,26 +1,24 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: model-training-depl
+  name: model-training-job
   labels:
     app: model-training
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: model-training
-  template:
-    metadata:
-      labels:
-        app: model-training
-    spec:
-      volumes:
-        - name: trained-models
-          persistentVolumeClaim:
-            claimName: trained-models-claim
-      containers:
-        - name: model-training
-          image: ghcr.io/remla23-team16/model-training:latest
-          volumeMounts:
-            - name: trained-models
-              mountPath: /app/data/out
+    backoffLimit: 4
+    template:
+      metadata:
+        labels:
+          app: model-training
+      spec:
+        restartPolicy: Never
+        volumes:
+          - name: trained-models
+            persistentVolumeClaim:
+              claimName: trained-models-claim
+        containers:
+          - name: model-training
+            image: ghcr.io/remla23-team16/model-training:latest
+            volumeMounts:
+              - name: trained-models
+                mountPath: /app/data/out

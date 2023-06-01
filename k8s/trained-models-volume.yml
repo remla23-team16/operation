@@ -4,10 +4,22 @@ metadata:
   name: trained-models
 spec:
   capacity:
-    storage: 128Mi
+    storage: 512Mi
+  volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /mnt/trained-models
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - minikube
 
 ---
 
@@ -21,3 +33,4 @@ spec:
   resources:
     requests:
       storage: 128Mi
+  storageClassName: local-storage
