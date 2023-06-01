@@ -10,7 +10,7 @@ spec:
       app: app-svc
   endpoints:
     - interval: 5s
-      port: "3000"
+      path: '/metrics'
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -24,4 +24,4 @@ spec:
       app: model-service-svc
   endpoints:
     - interval: 5s
-      port: "8080"
+      path: '/metrics'
