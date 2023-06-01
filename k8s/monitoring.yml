@@ -9,8 +9,7 @@ spec:
     matchLabels:
       app: app-svc
   endpoints:
-    - interval: 5s
-      port: "3000"
+  - interval: 1s
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -23,5 +22,4 @@ spec:
     matchLabels:
       app: model-service-svc
   endpoints:
-    - interval: 5s
-      port: "8080"
+  - interval: 1s
