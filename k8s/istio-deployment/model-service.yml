@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: model-service-depl
+  labels:
+    app: model-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: model-service
+  template:
+    metadata:
+      labels:
+        app: model-service
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+    spec:
+      volumes:
+        - name: trained-models
+          persistentVolumeClaim:
+            claimName: trained-models-claim
+      containers:
+        - name: model-service
+          image: ghcr.io/remla23-team16/model-service:latest
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: trained-models
+              mountPath: /app/data/out
+          env:
+          - name: CLASSIFIER_PATH
+            value: /app/data/out/classifier/
+          - name: BOW_PATH
+            value: /app/data/out/bow/
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: model-service-svc
+  labels:
+    app: model-service-svc
+spec:
+  selector:
+    app: model-service
+  ports:
+    - port: 8080
+      targetPort: 8080
