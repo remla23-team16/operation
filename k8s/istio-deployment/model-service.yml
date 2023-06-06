@@ -4,15 +4,18 @@ metadata:
   name: model-service-depl
   labels:
     app: model-service
+    version: v1
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: model-service
+      version: v1
   template:
     metadata:
       labels:
         app: model-service
+        version: v1
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
@@ -34,17 +37,3 @@ spec:
             value: /app/data/out/classifier/
           - name: BOW_PATH
             value: /app/data/out/bow/
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: model-service-svc
-  labels:
-    app: model-service-svc
-spec:
-  selector:
-    app: model-service
-  ports:
-    - port: 8080
-      targetPort: 8080
